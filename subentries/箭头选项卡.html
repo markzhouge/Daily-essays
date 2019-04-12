@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1{ width:200px; position:relative;}
+#div1 span:first-of-type{ position:absolute; left:0; top:100px; display:none;}
+#div1 span:last-of-type{ position:absolute; right:0; top:100px; display:none;}
+#div1 div{ width:200px; height:200px; border:1px #000 solid; display:none;}
+#div1 input.active{ background:red;}
+#div2 div{ width:200px; height:200px; border:1px #000 solid; display:none;}
+#div2 input.active{ background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+	<input class="active" type="button" value="1">
+    <input type="button" value="2">
+    <input type="button" value="3">
+    
+    <div style="display:block">11111111</div>
+    <div>22222222</div>
+    <div>33333333</div>
+    
+    <span>←</span>
+    <span>→</span>
+</div>
+<script>
+
+	
+	var oWrap = document.getElementById("div1");
+	
+	var aBtn = oWrap.getElementsByTagName('input');
+	var aDiv = oWrap.getElementsByTagName('div');
+	var aSpan = oWrap.getElementsByTagName('span');
+	
+
+	var index = 0;	  	//当前显示的div的下标
+	
+	for(var i=0;i<aBtn.length;i++){
+		
+		aBtn[i].index = i;  	 //每个input存一个自己的下标。
+		aBtn[i].onclick = function(){
+			
+			index = this.index;		//当前显示的div的下标赋值给index.
+			tab(aDiv[this.index],this);
+		};
+	}
+	
+	aSpan[1].onclick = showNext;
+	aSpan[0].onclick = showPrev;
+	
+	oWrap.onmouseover = showArrow;
+	oWrap.onmouseout = hideArrow;
+	
+	//显示上一个div的逻辑
+	function showPrev(){	
+		index--;
+		if(index == -1){
+			index = aBtn.length-1;
+		}		
+		tab(aDiv[index],aBtn[index]);
+	}
+	//显示下一个div的逻辑
+	function showNext(){	
+		index = (++index)%3;
+		tab(aDiv[index],aBtn[index]);
+	}
+	//隐藏箭头
+	function hideArrow(){
+		for(var i=0;i<aSpan.length;i++){
+			aSpan[i].style.display = 'none'
+		}
+	}
+	//显示箭头
+	function showArrow(){
+		for(var i=0;i<aSpan.length;i++){
+			aSpan[i].style.display = 'block'
+		}
+	}
+	
+	//tab切换的逻辑封装。
+	function tab (div,btn){
+		for(var i=0;i<aBtn.length;i++){
+			aDiv[i].style.display = 'none';
+			aBtn[i].className = '';
+		}
+		div.style.display = 'block';
+		btn.className = 'active';
+	}
+	
+</script>

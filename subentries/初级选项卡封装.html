@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div>div{
+				width:200px;
+				height: 200px;
+				border:1px solid #000;
+				display: none;
+			}
+			
+			div.active{
+				display: block;
+			}
+			
+			input.active{
+				background: red;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id='wrap1'>
+			<input type="button" class='active' value="1111" />
+			<input type="button" value="2222" />
+			<input type="button" value="3333" />
+			<div class='active'>111111</div>
+			<div>222222</div>
+			<div>333333</div>
+		</div>
+	
+	</body>
+	<script type="text/javascript">
+		
+//		var oWrap1 = document.getElementById("wrap1");
+//		var oWrap2 = document.getElementById("wrap2");
+//		var oWrap3 = document.getElementById("wrap3");
+		
+//		//调用tab函数,将父元素传入，就可以给所有的父元素的子元素添加选项卡的逻辑
+//		tab(oWrap1);
+//		tab(oWrap2);
+//		tab(oWrap3);
+		
+		var aWrap = document.body.children;
+		
+		//循环给wrap内的子元素添加选项卡逻辑
+		for(var i=0;i<aWrap.length;i++){
+			tab(aWrap[i]);
+		}
+		
+		//将所有的选项卡逻辑分组成一个函数
+		function tab(wrap){
+			var aBtn = wrap.getElementsByTagName('input');//div有3个,批量获取3个div.			
+			var aDiv = wrap.getElementsByTagName('div');			
+			for(var i=0;i<aBtn.length;i++){			
+				aBtn[i].index = i;	//每个按钮用一个专属变量index存自己的下标。
+				//每个按钮添加事件。
+				aBtn[i].onclick = function (){		
+					for(var j=0;j<aDiv.length;j++){			
+						aDiv[j].style.display = 'none';			
+						aBtn[j].className = '';				
+					}			
+					this.className = 'active';
+					aDiv[this.index].style.display = 'block';
+				};
+			}
+		}
+
+	</script>
+</html>

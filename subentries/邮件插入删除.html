@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			div{
+				border: 4px solid black;
+				width: 98%;
+				height: 500px;
+				margin: 6px;
+			}
+			p{
+				margin:10px 4px;
+			}
+			.active{
+				background: red;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button"  value="点击生成邮件" />
+		<div id='div1'></div>
+		<input type="button" value="全选"/>
+		<input type="button" value="反选"/>
+		<input type="button" value="删除邮件"/>
+		
+		<script type="text/javascript">
+			
+			var oDiv = document.getElementById("div1");
+			var aInput = document.getElementsByTagName('input');
+			var aP = document.getElementsByTagName('p');
+			var aRed = document.getElementsByClassName('active');
+			var aSpan = document.getElementsByTagName('span');
+			
+			aInput[0].addEventListener('click',insertP);
+			aInput[1].addEventListener('click',selAll);
+			aInput[2].addEventListener('click',fanxuan);
+			aInput[3].addEventListener('click',delP);
+			
+			oDiv.addEventListener('click',toggleRed);
+			
+			function delP(){
+				if(confirm('确定删除这'+aRed.length+'封邮件吗')){
+					[...aRed].forEach(function(item,i){
+						
+						oDiv.removeChild(item);						
+						//重新排序号
+						resetIndex();						
+					})
+				}			
+			}
+			
+			function toggleRed(ev){				
+				var et = ev.target;					
+				switch(et.nodeName){
+					case 'SPAN':
+						et.parentNode.className = et.parentNode.className ? '' : 'active';
+						et.previousElementSibling.checked = !et.previousElementSibling.checked;
+						break;
+					case 'P':
+						et.className = et.className ? '' : 'active';
+						et.children[0].checked = !et.children[0].checked;
+						break;
+					case 'INPUT':
+						et.parentNode.className = et.parentNode.className ? '' : 'active';
+				}							
+			}
+			
+			function fanxuan(){
+				[...aP].forEach(function(item,i){
+					item.className = item.className ? '' : 'active';
+					item.children[0].checked = !item.children[0].checked;
+				})
+			}
+			
+			function selAll(){
+				[...aP].forEach(function(item,i){
+					item.className = 'active';
+					item.children[0].checked = true;
+				})
+			}
+			
+			function insertP(){
+				
+				var oP = document.createElement("p");				
+				oP.innerHTML = '<input type="checkbox" /><span></span>'				
+				oDiv.appendChild(oP);
+				
+				//重新排序号
+				resetIndex();				
+			}
+			
+			function resetIndex(){
+				for(var i = 0;i<aSpan.length;i++){
+					aSpan[i].innerText = '这是第'+(aSpan.length-i)+'封邮件';
+				}
+			}
+			
+		</script>
+	</body>
+</html>

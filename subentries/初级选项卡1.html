@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div{
+				width:200px;
+				height: 200px;
+				border:1px solid #000;
+				display: none;
+			}
+			
+			div.active{
+				display: block;
+			}
+			
+			input.active{
+				background: red;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<input type="button" class='active' value="1111" />
+		<input type="button" value="2222" />
+		<input type="button" value="3333" />
+		<div class='active'>111111</div>
+		<div>222222</div>
+		<div>333333</div>
+	</body>
+	<script type="text/javascript">
+		
+		var aInput = document.getElementsByTagName('input');
+		var aDiv = document.getElementsByTagName('div');
+		
+		
+		for(var i=0;i<aInput.length;i++){			
+			aInput[i].index = i;//批量存下标
+			aInput[i].onclick = function (){			
+				for(var j=0;j<aInput.length;j++){				
+					aInput[j].className = '';//先让所有的input变成白色背景				
+					aDiv[j].className = '';//循环让所有的div隐藏
+				}			
+				this.className = 'active';	//当前点击的input变红色					
+				aDiv[this.index].className = 'active';	//显示下标与被点击的input的下标相同的div			
+			}			
+		}
+				
+		
+	</script>
+</html>

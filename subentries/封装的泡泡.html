@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			div{
+				width: 50px;
+				height: 50px;
+				background: red;
+				border-radius:50%;
+				position: absolute;
+				text-align: center;
+				line-height: 50px;
+				cursor: pointer;
+				font-size: 14px;
+				color:#fff;
+			}
+			input{
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" id="btn" value="插入泡泡" />
+	</body>
+	<script type="text/javascript">
+		
+		var oBtn = document.getElementById("btn");		
+		var arr = ["陈庚林","糜雨蕾","吴小峰","曹飞鹏","罗艺","马欢","刘艳楠","姚伟龙","张静","勾泓钦","黄永健","阳洲","王涛","唐碧卿","许录斌","周海芬","倪美芹","方念芹","刘嘉豪","艾一凡","蒋文彬","刘绍川","钟浪奇","张顺发","陈启明","冯显颖",'康森'];
+		
+		//视口的宽
+		var winW = document.documentElement.clientWidth;
+		//视口的高
+		var winH = document.documentElement.clientHeight;
+	
+		oBtn.addEventListener('click',insertDiv);
+			
+		function insertDiv(){
+			
+			var oDiv = document.createElement("div");
+			
+			//给div加样式
+			initDiv(oDiv);
+			
+			//给div设置抖动
+			dance(oDiv);
+			
+			//给div设置拖拽
+			moveDiv(oDiv);
+
+		}
+		
+		function moveDiv(oDiv){
+			oDiv.addEventListener('mousedown',function(ev){
+				
+				var disX = ev.clientX - oDiv.offsetLeft;
+				var disY = ev.clientY - oDiv.offsetTop;
+				
+				document.onmousemove = function(ev){
+					ev.preventDefault();
+					oDiv.style.left = ev.clientX - disX + 'px';
+					oDiv.style.top = ev.clientY - disY + 'px';
+				}
+				
+				document.onmouseup = function(){
+					document.onmousemove = null;
+					document.onmouseup = null;
+				}
+			});
+		}
+				
+		function dance(oDiv){
+			//定时器，让div抖动.
+			var timer = setInterval(function(){
+				move(oDiv);
+			},20);
+			
+			//鼠标移入停止定时器.
+			oDiv.addEventListener('mouseover',function(){
+				clearInterval(timer);
+			});
+			
+			//鼠标移出定时器继续开启.
+			oDiv.addEventListener('mouseout',function(){
+				timer = setInterval(function(){
+					move(oDiv);
+				},20);
+			});
+		}
+				
+		function move(oDiv){
+			oDiv.style.left = oDiv.offsetLeft + getRand(-2,3) + 'px';
+			oDiv.style.top = oDiv.offsetTop + getRand(-2,3) + 'px';			
+		}
+		
+		function initDiv(ele){
+			ele.style.left = getRand(0,winW-49) + 'px';
+			ele.style.top = getRand(0,winH-49) + 'px';
+			ele.style.background = 'rgb('+getRand(0,256)+','+getRand(0,256)+','+getRand(0,256)+')';
+			ele.innerText = arr[getRand(0,arr.length)];			
+			document.body.appendChild(ele);
+		}
+				
+		function getRand(){
+			return Math.floor(Math.random()*(arguments[0]-arguments[1])+arguments[1]);
+		}
+		
+	</script>
+</html>

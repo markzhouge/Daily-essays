@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div{
+				width:200px;
+				height: 200px;
+				border:1px solid #000;
+				display: none;
+			}
+			
+			div.active{
+				display: block;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<input type="button" class='active' value="1111" />
+		<input type="button" value="2222" />
+		<input type="button" value="3333" />
+		<div class='active'>111111</div>
+		<div>222222</div>
+		<div>333333</div>
+	</body>
+	<script type="text/javascript">
+		
+//		选项卡逻辑:
+//			点击按钮,显示某个div(下标与被点击的input相同的div),其他隐藏.
+				
+		var aBtn = document.getElementsByTagName('input');//按钮有3个，批量获取3个按钮。aBtn -> 是数组.
+		
+		var aDiv = document.getElementsByTagName('div');//div有3个,批量获取3个div.
+	
+		for(var i=0;i<aBtn.length;i++){			
+			aBtn[i].index = i;//每个按钮用一个专属变量index存自己的下标。			
+			aBtn[i].onclick = showTab;//每个按钮添加事件。
+		}		
+		function showTab(){		
+			for(var j=0;j<aDiv.length;j++){			
+				aDiv[j].style.display = 'none';//先隐藏所有div						
+				aBtn[j].style.background = '';	// 所有按钮背景变白					
+			}	
+			this.style.background = 'red';//被点击的按钮变红。
+			aDiv[this.index].style.display = 'block';//下标与被点击的input相同的div显示
+		}
+		
+
+	</script>
+</html>

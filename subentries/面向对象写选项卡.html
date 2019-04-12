@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div>div{
+				height: 200px;
+				border:1px solid #000;
+				width: 200px;
+				display: none;
+			}
+			
+			div.active{
+				display: block;
+			}
+			
+			input.active{
+				background: red;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class='tab'>
+			<input type="button" class='active' value="1111" />
+			<input type="button" value="2222" />
+			<input type="button" value="3333" />
+			<div class='active'>111</div>
+			<div>222</div>
+			<div>333</div>
+		</div>
+		<div class='tab'>
+			<input type="button" class='active' value="1111" />
+			<input type="button" value="2222" />
+			<input type="button" value="3333" />
+			<div class='active'>111</div>
+			<div>222</div>
+			<div>333</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		
+		
+		
+		function Tab(father){
+			
+			this.father = father;
+			this.btn = father.getElementsByTagName('input');
+			this.div = father.getElementsByTagName('div');
+			
+			var _this = this;
+			
+			[...this.btn].forEach(function(item,i){				
+				item.addEventListener('click',function(){
+					_this.showDiv(this,i);
+				})
+			});
+		}
+		
+		Tab.prototype.showDiv = function(that,i){
+			
+			var _this = this;
+			
+			[...this.div].forEach(function(item,j){
+				_this.div[j].className = '';
+				_this.btn[j].className = '';
+			})
+			
+			that.className = 'active';
+			this.div[i].className = 'active';
+		}
+		
+		var tab1 = new Tab(document.getElementsByClassName('tab')[0]);
+		var tab2 = new Tab(document.getElementsByClassName('tab')[1]);
+		
+	</script>
+</html>
